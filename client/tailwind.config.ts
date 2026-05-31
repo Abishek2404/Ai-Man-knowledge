@@ -8,12 +8,14 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#17202a",
-        line: "#d9e2ec",
-        paper: "#f7fafc",
-        mint: "#0f766e",
-        amber: "#b45309",
-        berry: "#9f1239"
+        ink: "#0b1020",
+        line: "#23304f",
+        paper: "#0f172a",
+        mint: "#22d3ee",
+        amber: "#f59e0b",
+        berry: "#f43f5e",
+        panel: "#111827",
+        glow: "#7c3aed"
       }
     }
   },

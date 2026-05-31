@@ -25,7 +25,7 @@ export default function DashboardPage() {
     <main className="mx-auto max-w-6xl px-4 py-10">
       <div className="mb-8">
         <p className="text-sm font-semibold uppercase text-mint">Contributor dashboard</p>
-        <h1 className="mt-2 text-3xl font-bold text-ink">Your knowledge claims</h1>
+        <h1 className="mt-2 text-3xl font-bold text-white">Your knowledge claims</h1>
       </div>
 
       <div className="mb-8 grid gap-3 md:grid-cols-3">

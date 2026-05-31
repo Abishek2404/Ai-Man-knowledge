@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { scoreClaim } from "../services/scoringService.js";
 
 const seedInputs = [
@@ -29,7 +30,7 @@ const seedInputs = [
   }
 ];
 
-const claims = seedInputs.map((input) => {
+const seedClaims = seedInputs.map((input) => {
   const scores = scoreClaim(input);
   return {
     ...input,
@@ -43,22 +44,105 @@ const claims = seedInputs.map((input) => {
   };
 });
 
-export function getClaims() {
-  return [...claims].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+const claimSchema = new mongoose.Schema(
+  {
+    id: { type: String, required: true, unique: true, index: true },
+    title: { type: String, required: true, trim: true },
+    category: { type: String, required: true },
+    description: { type: String, required: true },
+    usefulness: { type: String, required: true },
+    evidenceUrl: { type: String, default: "" },
+    location: { type: String, default: "" },
+    observedAt: { type: String, default: "" },
+    contributorName: { type: String, required: true },
+    consent: { type: Boolean, default: false },
+    status: { type: String, required: true },
+    reviewerFeedback: { type: String, default: "" },
+    reviewerScore: { type: Number, default: 0 },
+    aiUsefulness: { type: String, required: true },
+    createdAt: { type: String, required: true },
+    scores: {
+      knowledgeValue: { type: Number, required: true },
+      completeness: { type: Number, required: true },
+      confidence: { type: String, required: true },
+      suggestedUse: { type: String, required: true },
+      flags: { type: [String], default: [] }
+    }
+  },
+  {
+    id: false,
+    versionKey: false,
+    toJSON: {
+      transform(_doc, ret) {
+        delete ret._id;
+        return ret;
+      }
+    }
+  }
+);
+
+export const Claim = mongoose.models.Claim || mongoose.model("Claim", claimSchema);
+
+let useMemoryStore = false;
+let memoryClaims = seedClaims;
+
+function serializeClaim(claim) {
+  if (!claim) return claim;
+  const { _id, ...data } = claim;
+  return data;
 }
 
-export function findClaim(id) {
-  return claims.find((claim) => claim.id === id);
+export function enableMemoryStore() {
+  useMemoryStore = true;
+  memoryClaims = [...seedClaims];
 }
 
-export function addClaim(claim) {
-  claims.unshift(claim);
-  return claim;
+export async function seedClaimsIfEmpty() {
+  if (useMemoryStore) return;
+
+  const count = await Claim.countDocuments();
+  if (count === 0) {
+    await Claim.insertMany(seedClaims);
+  }
 }
 
-export function updateClaim(id, update) {
-  const index = claims.findIndex((claim) => claim.id === id);
-  if (index === -1) return undefined;
-  claims[index] = { ...claims[index], ...update };
-  return claims[index];
+export async function getClaims() {
+  if (useMemoryStore) {
+    return [...memoryClaims].sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  }
+
+  const claims = await Claim.find().sort({ createdAt: -1 }).lean();
+  return claims.map(serializeClaim);
+}
+
+export async function findClaim(id) {
+  if (useMemoryStore) {
+    return memoryClaims.find((claim) => claim.id === id);
+  }
+
+  const claim = await Claim.findOne({ id }).lean();
+  return serializeClaim(claim);
+}
+
+export async function addClaim(claim) {
+  if (useMemoryStore) {
+    memoryClaims = [claim, ...memoryClaims];
+    return claim;
+  }
+
+  const created = await Claim.create(claim);
+  return created.toJSON();
+}
+
+export async function updateClaim(id, update) {
+  if (useMemoryStore) {
+    const claim = memoryClaims.find((item) => item.id === id);
+    if (!claim) return undefined;
+
+    Object.assign(claim, update);
+    return claim;
+  }
+
+  const claim = await Claim.findOneAndUpdate({ id }, update, { new: true }).lean();
+  return serializeClaim(claim);
 }

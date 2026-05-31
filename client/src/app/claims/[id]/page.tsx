@@ -32,7 +32,7 @@ export default function ClaimDetailPage({ params }: { params: { id: string } }) 
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="text-sm font-semibold uppercase text-mint">{claim.category}</p>
-          <h1 className="mt-2 text-3xl font-bold text-ink">{claim.title}</h1>
+          <h1 className="mt-2 text-3xl font-bold text-white">{claim.title}</h1>
         </div>
         <StatusBadge status={claim.status} />
       </div>
@@ -44,27 +44,27 @@ export default function ClaimDetailPage({ params }: { params: { id: string } }) 
       </div>
 
       <section className="grid gap-6">
-        <div className="rounded-md border border-line bg-white p-5">
-          <h2 className="text-xl font-semibold">Claim details</h2>
-          <p className="mt-4 leading-7 text-slate-700">{claim.description}</p>
+        <div className="rounded-md border border-white/10 bg-panel/80 p-5 shadow-lg shadow-black/20">
+          <h2 className="text-xl font-semibold text-white">Claim details</h2>
+          <p className="mt-4 leading-7 text-slate-300">{claim.description}</p>
           <h3 className="mt-6 font-semibold">Usefulness</h3>
-          <p className="mt-2 leading-7 text-slate-700">{claim.usefulness}</p>
+          <p className="mt-2 leading-7 text-slate-300">{claim.usefulness}</p>
           <dl className="mt-6 grid gap-3 text-sm md:grid-cols-2">
             <div>
               <dt className="font-semibold">Location</dt>
-              <dd className="text-slate-600">{claim.location || "Not provided"}</dd>
+              <dd className="text-slate-300">{claim.location || "Not provided"}</dd>
             </div>
             <div>
               <dt className="font-semibold">Observed date</dt>
-              <dd className="text-slate-600">{claim.observedAt || "Not provided"}</dd>
+              <dd className="text-slate-300">{claim.observedAt || "Not provided"}</dd>
             </div>
             <div>
               <dt className="font-semibold">Contributor</dt>
-              <dd className="text-slate-600">{claim.contributorName}</dd>
+              <dd className="text-slate-300">{claim.contributorName}</dd>
             </div>
             <div>
               <dt className="font-semibold">Suggested AI use</dt>
-              <dd className="text-slate-600">{claim.aiUsefulness}</dd>
+              <dd className="text-slate-300">{claim.aiUsefulness}</dd>
             </div>
           </dl>
           {claim.evidenceUrl && (
@@ -80,8 +80,8 @@ export default function ClaimDetailPage({ params }: { params: { id: string } }) 
           )}
         </div>
 
-        <div className="rounded-md border border-line bg-white p-5">
-          <h2 className="text-xl font-semibold">Trust indicators</h2>
+        <div className="rounded-md border border-white/10 bg-panel/80 p-5 shadow-lg shadow-black/20">
+          <h2 className="text-xl font-semibold text-white">Trust indicators</h2>
           <div className="mt-4 flex flex-wrap gap-2">
             {claim.scores.flags.length ? (
               claim.scores.flags.map((flag) => (

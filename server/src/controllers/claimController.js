@@ -1,19 +1,27 @@
 import { addClaim, findClaim, getClaims } from "../models/Claim.js";
 import { scoreClaim } from "../services/scoringService.js";
 
-export function listClaims(_req, res) {
-  res.json({ data: getClaims() });
-}
-
-export function getClaimById(req, res, next) {
-  const claim = findClaim(req.params.id);
-  if (!claim) {
-    return next({ status: 404, message: "Claim not found" });
+export async function listClaims(_req, res, next) {
+  try {
+    res.json({ data: await getClaims() });
+  } catch (error) {
+    next(error);
   }
-  res.json({ data: claim });
 }
 
-export function createClaim(req, res, next) {
+export async function getClaimById(req, res, next) {
+  try {
+    const claim = await findClaim(req.params.id);
+    if (!claim) {
+      return next({ status: 404, message: "Claim not found" });
+    }
+    res.json({ data: claim });
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function createClaim(req, res, next) {
   const required = ["title", "category", "description", "usefulness", "contributorName"];
   const missing = required.filter((field) => !req.body[field]);
 
@@ -22,16 +30,20 @@ export function createClaim(req, res, next) {
   }
 
   const scores = scoreClaim(req.body);
-  const claim = addClaim({
-    ...req.body,
-    id: crypto.randomUUID(),
-    status: "Submitted",
-    reviewerFeedback: "",
-    reviewerScore: 0,
-    aiUsefulness: scores.suggestedUse,
-    createdAt: new Date().toISOString(),
-    scores
-  });
+  try {
+    const claim = await addClaim({
+      ...req.body,
+      id: crypto.randomUUID(),
+      status: "Submitted",
+      reviewerFeedback: "",
+      reviewerScore: 0,
+      aiUsefulness: scores.suggestedUse,
+      createdAt: new Date().toISOString(),
+      scores
+    });
 
-  res.status(201).json({ data: claim });
+    res.status(201).json({ data: claim });
+  } catch (error) {
+    next(error);
+  }
 }

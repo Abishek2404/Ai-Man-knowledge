@@ -39,7 +39,7 @@ export function ReviewerActions({
   }
 
   return (
-    <form onSubmit={onSubmit} className="grid gap-4 rounded-md border border-line bg-white p-4">
+    <form onSubmit={onSubmit} className="grid gap-4 rounded-md border border-white/10 bg-panel/80 p-4 shadow-lg shadow-black/20">
       <div className="grid gap-4 md:grid-cols-3">
         <div className="grid gap-2">
           <label className="text-sm font-medium" htmlFor="status">
@@ -49,7 +49,7 @@ export function ReviewerActions({
             id="status"
             value={status}
             onChange={(event) => setStatus(event.target.value as ClaimStatus)}
-            className="focus-ring rounded-md border border-line px-3 py-2"
+            className="focus-ring rounded-md border border-white/10 px-3 py-2"
           >
             {statuses.map((option) => (
               <option key={option}>{option}</option>
@@ -67,7 +67,7 @@ export function ReviewerActions({
             max={100}
             value={reviewerScore}
             onChange={(event) => setReviewerScore(Number(event.target.value))}
-            className="focus-ring rounded-md border border-line px-3 py-2"
+            className="focus-ring rounded-md border border-white/10 px-3 py-2"
           />
         </div>
         <div className="grid gap-2">
@@ -78,7 +78,7 @@ export function ReviewerActions({
             id="aiUsefulness"
             value={aiUsefulness}
             onChange={(event) => setAiUsefulness(event.target.value as AiUsefulness)}
-            className="focus-ring rounded-md border border-line px-3 py-2"
+            className="focus-ring rounded-md border border-white/10 px-3 py-2"
           >
             {aiUsefulnessOptions.map((option) => (
               <option key={option}>{option}</option>
@@ -95,7 +95,7 @@ export function ReviewerActions({
           id="reviewerFeedback"
           value={reviewerFeedback}
           onChange={(event) => setReviewerFeedback(event.target.value)}
-          className="focus-ring min-h-24 rounded-md border border-line px-3 py-2"
+          className="focus-ring min-h-24 rounded-md border border-white/10 px-3 py-2"
           placeholder="Decision notes, required evidence, or validation context."
         />
       </div>
@@ -103,7 +103,7 @@ export function ReviewerActions({
       <button
         type="submit"
         disabled={isSaving}
-        className="focus-ring inline-flex w-fit items-center gap-2 rounded-md bg-ink px-4 py-2 font-semibold text-white hover:bg-slate-700"
+        className="focus-ring inline-flex w-fit items-center gap-2 rounded-md bg-glow px-4 py-2 font-semibold text-white shadow-lg shadow-violet-500/20 hover:bg-violet-500"
       >
         <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
         {isSaving ? "Saving..." : "Save review"}

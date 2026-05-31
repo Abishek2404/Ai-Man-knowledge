@@ -50,7 +50,7 @@ export function ClaimForm() {
           required
           value={claim.title}
           onChange={(event) => update("title", event.target.value)}
-          className="focus-ring rounded-md border border-line px-3 py-2"
+          className="focus-ring rounded-md border border-white/10 px-3 py-2"
           placeholder="Short summary of the knowledge claim"
         />
       </div>
@@ -63,7 +63,7 @@ export function ClaimForm() {
           id="category"
           value={claim.category}
           onChange={(event) => update("category", event.target.value as ClaimInput["category"])}
-          className="focus-ring rounded-md border border-line px-3 py-2"
+          className="focus-ring rounded-md border border-white/10 px-3 py-2"
         >
           {categories.map((category) => (
             <option key={category}>{category}</option>
@@ -80,7 +80,7 @@ export function ClaimForm() {
           required
           value={claim.description}
           onChange={(event) => update("description", event.target.value)}
-          className="focus-ring min-h-36 rounded-md border border-line px-3 py-2"
+          className="focus-ring min-h-36 rounded-md border border-white/10 px-3 py-2"
           placeholder="Describe what happened, what changed, or what should be corrected."
         />
       </div>
@@ -94,7 +94,7 @@ export function ClaimForm() {
           required
           value={claim.usefulness}
           onChange={(event) => update("usefulness", event.target.value)}
-          className="focus-ring min-h-28 rounded-md border border-line px-3 py-2"
+          className="focus-ring min-h-28 rounded-md border border-white/10 px-3 py-2"
           placeholder="Explain how this could help AI systems become more accurate or useful."
         />
       </div>
@@ -108,7 +108,7 @@ export function ClaimForm() {
             id="evidenceUrl"
             value={claim.evidenceUrl}
             onChange={(event) => update("evidenceUrl", event.target.value)}
-            className="focus-ring rounded-md border border-line px-3 py-2"
+            className="focus-ring rounded-md border border-white/10 px-3 py-2"
             placeholder="https://..."
           />
         </div>
@@ -120,7 +120,7 @@ export function ClaimForm() {
             id="location"
             value={claim.location}
             onChange={(event) => update("location", event.target.value)}
-            className="focus-ring rounded-md border border-line px-3 py-2"
+            className="focus-ring rounded-md border border-white/10 px-3 py-2"
             placeholder="Place, region, or context"
           />
         </div>
@@ -136,7 +136,7 @@ export function ClaimForm() {
             type="date"
             value={claim.observedAt}
             onChange={(event) => update("observedAt", event.target.value)}
-            className="focus-ring rounded-md border border-line px-3 py-2"
+            className="focus-ring rounded-md border border-white/10 px-3 py-2"
           />
         </div>
         <div className="grid gap-2">
@@ -148,13 +148,13 @@ export function ClaimForm() {
             required
             value={claim.contributorName}
             onChange={(event) => update("contributorName", event.target.value)}
-            className="focus-ring rounded-md border border-line px-3 py-2"
+            className="focus-ring rounded-md border border-white/10 px-3 py-2"
             placeholder="Name or organization"
           />
         </div>
       </div>
 
-      <label className="flex items-start gap-3 rounded-md border border-line bg-white p-3 text-sm">
+      <label className="flex items-start gap-3 rounded-md border border-white/10 bg-panel/80 p-3 text-sm">
         <input
           type="checkbox"
           checked={claim.consent}
@@ -167,7 +167,7 @@ export function ClaimForm() {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="focus-ring inline-flex w-fit items-center gap-2 rounded-md bg-mint px-4 py-2 font-semibold text-white hover:bg-teal-800"
+        className="focus-ring inline-flex w-fit items-center gap-2 rounded-md bg-mint px-4 py-2 font-semibold text-ink shadow-lg shadow-cyan-500/20 hover:bg-cyan-300"
       >
         <Send className="h-4 w-4" aria-hidden="true" />
         {isSubmitting ? "Submitting..." : "Submit claim"}

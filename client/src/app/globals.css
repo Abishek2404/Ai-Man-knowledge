@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
-  background: #f7fafc;
-  color: #17202a;
+  color-scheme: dark;
+  background: #070b16;
+  color: #e5edf8;
 }
 
 * {
@@ -15,8 +15,11 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background: #f7fafc;
-  color: #17202a;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(34, 211, 238, 0.18), transparent 28rem),
+    radial-gradient(circle at 88% 18%, rgba(124, 58, 237, 0.2), transparent 30rem),
+    linear-gradient(180deg, #070b16 0%, #0b1020 48%, #111827 100%);
+  color: #e5edf8;
 }
 
 a {
@@ -37,5 +40,17 @@ textarea {
 }
 
 .focus-ring:focus-visible {
-  outline-color: #0f766e;
+  outline-color: #22d3ee;
+}
+
+input,
+select,
+textarea {
+  background: rgba(15, 23, 42, 0.88);
+  color: #e5edf8;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #94a3b8;
 }

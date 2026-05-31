@@ -37,3 +37,24 @@ Run the server:
 ```bash
 npm.cmd run dev:server
 ```
+
+The server uses MongoDB for persistence. Create `server/.env` from `server/.env.example`
+and set `MONGODB_URI` to your local MongoDB or MongoDB Atlas connection string.
+
+## Deploy Frontend to Vercel
+
+Deploy the Next.js frontend as the Vercel project:
+
+1. Push this repository to GitHub.
+2. In Vercel, create a new project from the repository.
+3. Set the project Root Directory to `client`.
+4. Keep the Framework Preset as `Next.js`.
+5. Leave Build Command as `npm run build`.
+6. Leave Output Directory as `.next`.
+
+The frontend can run without the Express API by using browser storage fallback data. If you deploy
+the API separately, add this Vercel environment variable to the frontend project:
+
+```txt
+NEXT_PUBLIC_API_URL=https://your-api-domain.com/api
+```
